@@ -57,7 +57,7 @@ def hog(gray):
             for j in range(N):
                 for i in range(N):
                     Hist[y, x, gra_n[y*4+j, x*4+i]] += mag[y*4+j, x*4+i]
-                
+
     ## Normalization
     C = 3
     eps = 1
@@ -84,7 +84,7 @@ def resize(img, h, w):
 
     dx = x - ix
     dy = y - iy
-    
+
     out = (1-dx) * (1-dy) * img[iy, ix] + dx * (1 - dy) * img[iy, ix+1] + (1 - dx) * dy * img[iy+1, ix] + dx * dy * img[iy+1, ix+1]
     out[out>255] = 255
 
@@ -123,7 +123,7 @@ class NN:
         grad_b2 = np.dot(np.ones([grad_u2.shape[0]]), grad_u2)
         self.w2 -= self.lr * grad_w2
         self.b2 -= self.lr * grad_b2
-        
+
         grad_u1 = np.dot(grad_u2, self.w2.T) * self.z2 * (1 - self.z2)
         grad_w1 = np.dot(self.z1.T, grad_u1)
         grad_b1 = np.dot(np.ones([grad_u1.shape[0]]), grad_u1)
@@ -161,7 +161,7 @@ for i in range(Crop_num):
     crop_area = gray[y1:y2, x1:x2]
     crop_area = resize(crop_area, H_size, H_size)
     _hog = hog(crop_area)
-    
+
     db[i, :F_n] = _hog.ravel()
     db[i, -1] = label
 
